@@ -1,5 +1,3 @@
-Certainly! Here's a simplified README for your Music Recommendation Project:
-
 # Music Recommendation Project Using KMeans by Rohan Mahajan
 
 ## Introduction

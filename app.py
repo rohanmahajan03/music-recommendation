@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# Custom CSS for background color and font
+# Inject background patterns HTML and CSS
 st.markdown(
     """
     <style>
@@ -30,33 +30,38 @@ st.markdown(
         color: black;
         background-color: white;
     }
-
-    /* Remove top padding and margin */
     header, .main {
         padding-top: 0;
         margin-top: -50px;
     }
     
-    /* Remove footer */
     footer {
         visibility: hidden;
     }
     
-    /* Hide Streamlit header */
     .css-18ni7ap {
         visibility: hidden;
     }
 
-    .container {
-        position: relative;
+    .background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10; 
+        pointer-events: none; 
+    }
+
+    .left-pattern, .right-pattern {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 27.00%;
     }
 
     .left-pattern {
-        position: absolute;
-        top: 0;
         left: 0;
-        bottom: 0;
-        width: 33.33%;
         background: repeating-linear-gradient(
             45deg,
             rgba(255,255,255,0.1),
@@ -67,11 +72,7 @@ st.markdown(
     }
 
     .right-pattern {
-        position: absolute;
-        top: 0;
         right: 0;
-        bottom: 0;
-        width: 33.33%;
         background: repeating-linear-gradient(
             -45deg,
             rgba(255,255,255,0.1),
@@ -81,27 +82,18 @@ st.markdown(
         );
     }
     </style>
-    """
-    ,
+    """,
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="container"><div class="left-pattern"></div><div class="right-pattern"></div></div>', unsafe_allow_html=True)
+st.markdown('<div class="background-container"><div class="left-pattern"></div><div class="right-pattern"></div></div>', unsafe_allow_html=True)
 
-
-# Title of the app
 st.title('🎵 Music Recommendation System')
 
 st.markdown("<br><br><br><br><br>", unsafe_allow_html=True)
 
-# Display text
-st.header('Input a song of your choice')
-
-# Interactive widgets
-try:
-    song_name = st.text_input('')
-except:
-    st.error("Error in input. Please try again.")
+st.header('Input a song of your choice:')
+song_name = st.text_input('', placeholder='Type a song name here...')
 
 class DataFunctions:
     def __init__(self):
@@ -110,19 +102,18 @@ class DataFunctions:
     def recommend_songs(self, song_name):
         input_track = song_name.lower()
 
-        # Convert track_name and track_genre columns to lowercase for consistent comparison
         self.df['track_name_lower'] = self.df['track_name'].str.lower()
         self.df['track_genre_lower'] = self.df['track_genre'].str.lower()
 
-        # Get the genre and cluster of the input song
+        # Get the genre and song cluster of the input song
         input_genre = self.df.loc[self.df['track_name_lower'] == input_track, 'track_genre'].values[0]
         song_cluster = self.df.loc[self.df['track_name_lower'] == input_track, 'cluster'].values[0]
 
-        # Sample 3 songs from the same genre and cluster
         recommended_rows = self.df.query('(track_genre_lower == @input_genre) & (cluster == @song_cluster)').sample(n=3)
 
-        # Display recommended songs
+        # display recommended songs
         if not recommended_rows.empty:
+            st.markdown("<br><br>", unsafe_allow_html=True)
             st.subheader("Here are some songs you might enjoy:")
             for index, row in recommended_rows.iterrows():
                 st.write(f"**{row.track_name}** by {row.artists}")
@@ -133,7 +124,7 @@ class DataFunctions:
 
 data_functions = DataFunctions()
 
-if len(song_name) > 0:
+if len(song_name) >= 1:
     try:
         data_functions.recommend_songs(song_name)
     except:

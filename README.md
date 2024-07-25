@@ -48,4 +48,9 @@ Cluster music genres based on their average audio feature values. Analyze the ge
 
 This project provides a music recommendation system that clusters tracks based on their audio features and genres. By exploring the clusters, you can discover similar tracks and genres that match your music preferences.
 
+## P.S. I have also integrated this into a web app via streamlit and deployed using AWS EC2.
+Here is a screenshot of how the app looks:
+<img width="1464" alt="Screen Shot 2024-07-24 at 9 58 42 PM" src="https://github.com/user-attachments/assets/b7754565-383a-4352-9803-22e56a66ad01">
+
+
 Thank you for viewing my project!

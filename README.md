@@ -50,7 +50,7 @@ This project provides a music recommendation system that clusters tracks based o
 
 ## P.S. I have also integrated this into a web app via streamlit and deployed using AWS EC2.
 Here is a screenshot of how the app looks:
-<img width="1447" alt="Screen Shot 2024-07-24 at 9 33 47 PM" src="https://github.com/user-attachments/assets/d120bddf-4586-4318-8f54-b4c35a15cfbe">
+<img width="1464" alt="Screen Shot 2024-07-24 at 9 58 42 PM" src="https://github.com/user-attachments/assets/b7754565-383a-4352-9803-22e56a66ad01">
 
 
 Thank you for viewing my project!
